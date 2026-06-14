@@ -98,7 +98,7 @@ INSERT INTO Bookings (booking_id, user_id, match_id, seat_number, payment_status
 SELECT
   match_id,
   fixture,
-  round(base_ticket_price) AS base_ticket_price
+  ROUND(base_ticket_price) AS base_ticket_price
 FROM Matches
 WHERE tournament_category = 'Champions League' 
   AND match_status = 'Available';
@@ -138,3 +138,14 @@ INNER JOIN Users u
   ON b.user_id = u.user_id
 INNER JOIN Matches m
   ON b.match_id = m.match_id;
+
+-- =============================================================================================================================================
+-- Query 5: Display a comprehensive list of all users and their booking IDs, ensuring that fans who have never bought a ticket are still listed.
+-- =============================================================================================================================================
+SELECT
+  u.user_id,
+  u.full_name,
+  b.booking_id
+FROM Users AS u
+LEFT JOIN Bookings AS b
+  ON u.user_id = b.user_id;
